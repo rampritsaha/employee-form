@@ -33,10 +33,8 @@
     { "id": 5, "name": "Help" }
   ],
   "features": [
-    { "id": 1, "name": "User Authentication" },
-    { "id": 2, "name": "Data Visualization" },
-    { "id": 3, "name": "Real-time Notifications" },
-    { "id": 4, "name": "Customizable UI" },
-    { "id": 5, "name": "Multi-Language Support" }
+    { "id": 1, "name": "User Management", "screenId": "Dashboard" },
+    { "id": 2, "name": "Reporting", "screenId": "Dashboard" },
+    { "id": 3, "name": "Profile Edit", "screenId": "Profile" }
   ]
 }

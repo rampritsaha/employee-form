@@ -11,9 +11,10 @@ import {
   FormControl,
   InputLabel,
   Box,
+  Chip,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { Add, Delete } from "@mui/icons-material";
+import { Add, Close, Delete } from "@mui/icons-material";
 import axios from "axios";
 
 const App = () => {
@@ -22,7 +23,7 @@ const App = () => {
   const [role, setRole] = useState("");
   const [team, setTeam] = useState("");
   const [applications, setApplications] = useState([
-    { name: "", screen: "", features: [""] },
+    { name: "", screen: "", features: [] },
   ]);
 
   const [formData, setFormData] = useState();
@@ -61,7 +62,7 @@ const App = () => {
   const addApplication = () => {
     setApplications((prev) => [
       ...prev,
-      { name: "", screen: "", features: [""] },
+      { name: "", screen: "", features: [] },
     ]);
   };
 
@@ -73,26 +74,26 @@ const App = () => {
     const updatedApplications = [...applications];
     if (field === "name") {
       updatedApplications[index].screen = "";
-      updatedApplications[index].features = [""];
+      updatedApplications[index].features = [];
     } else if (field === "screen") {
-      updatedApplications[index].features = [""];
+      updatedApplications[index].features = [];
     }
     updatedApplications[index][field] = value;
     setApplications(updatedApplications);
   };
 
-  const addFeature = (appIndex) => {
+  const updateFeatures = (appIndex, selectedFeatures) => {
     const updatedApplications = [...applications];
-    updatedApplications[appIndex].features.push("");
+    updatedApplications[appIndex].features = selectedFeatures;
     setApplications(updatedApplications);
   };
 
-  const removeFeature = (appIndex, featureIndex) => {
-    const updatedApplications = [...applications];
-    updatedApplications[appIndex].features = updatedApplications[
-      appIndex
-    ].features.filter((_, i) => i !== featureIndex);
-    setApplications(updatedApplications);
+  const handleFeatureDelete = (appIndex, featureToDelete) => {
+    const currentFeatures = applications[appIndex].features;
+    const updatedFeatures = currentFeatures.filter(
+      (feature) => feature !== featureToDelete
+    );
+    updateFeatures(appIndex, updatedFeatures);
   };
 
   const handleSubmit = (e) => {
@@ -240,57 +241,54 @@ const App = () => {
                     </div>
                     <div>
                       <h5>Features</h5>
-                      {app.features.map((feature, featureIndex) => (
-                        <div
-                          key={featureIndex}
-                          style={{
-                            display: "flex",
-                            gap: "10px",
-                            marginBottom: 12,
+                      <FormControl fullWidth style={{ marginBottom: 16 }}>
+                        <InputLabel>Features</InputLabel>
+                        <Select
+                          multiple
+                          value={app.features}
+                          onChange={(e) => {
+                            const selectedFeatures = e.target.value;
+                            updateFeatures(appIndex, selectedFeatures);
                           }}
-                        >
-                          <FormControl fullWidth>
-                            <InputLabel>Feature</InputLabel>
-                            <Select
-                              value={feature}
-                              onChange={(e) => {
-                                const updatedFeatures = [...app.features];
-                                updatedFeatures[featureIndex] = e.target.value;
-                                updateApplication(
-                                  appIndex,
-                                  "features",
-                                  updatedFeatures
-                                );
+                          renderValue={(selected) => (
+                            <Box
+                              sx={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                gap: 0.5,
                               }}
                             >
-                              {app.screen &&
-                                features?.map((feat) => (
-                                  <MenuItem key={feat.id} value={feat.name}>
-                                    {feat.name}
-                                  </MenuItem>
-                                ))}
-                            </Select>
-                          </FormControl>
-                          <IconButton
-                            color="error"
-                            onClick={() =>
-                              removeFeature(appIndex, featureIndex)
-                            }
-                          >
-                            <Delete />
-                          </IconButton>
-                        </div>
-                      ))}
-                      <div style={{ marginTop: 10 }}>
-                        <Button
-                          variant="outlined"
-                          startIcon={<Add />}
-                          onClick={() => addFeature(appIndex)}
+                              {selected.map((value) => (
+                                <Chip
+                                  key={value}
+                                  label={value}
+                                  onDelete={() =>
+                                    handleFeatureDelete(appIndex, value)
+                                  }
+                                  deleteIcon={
+                                    <Close
+                                      onMouseDown={(event) =>
+                                        event.stopPropagation()
+                                      }
+                                    />
+                                  }
+                                />
+                              ))}
+                            </Box>
+                          )}
                           disabled={!app.screen}
                         >
-                          Add Feature
-                        </Button>
-                      </div>
+                          {features
+                            .filter(
+                              (feature) => feature.screenId === app.screen
+                            )
+                            .map((feature) => (
+                              <MenuItem key={feature.id} value={feature.name}>
+                                {feature.name}
+                              </MenuItem>
+                            ))}
+                        </Select>
+                      </FormControl>
                     </div>
                   </Card>
                 ))}
