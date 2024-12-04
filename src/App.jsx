@@ -61,7 +61,7 @@ const App = () => {
   const addApplication = () => {
     setApplications((prev) => [
       ...prev,
-      { name: "", screen: [], features: [] },
+      { name: "", screen: "", features: [""] },
     ]);
   };
 
