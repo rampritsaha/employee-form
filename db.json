@@ -1,0 +1,42 @@
+{
+  "roles": [
+    { "id": 1, "name": "Developer" },
+    { "id": 2, "name": "Designer" },
+    { "id": 3, "name": "Project Manager" },
+    { "id": 4, "name": "Product Owner" },
+    { "id": 5, "name": "QA Engineer" },
+    { "id": 6, "name": "System Administrator" },
+    { "id": 7, "name": "Business Analyst" }
+  ],
+  "teams": [
+    { "id": 1, "name": "Frontend" },
+    { "id": 2, "name": "Backend" },
+    { "id": 3, "name": "DevOps" },
+    { "id": 4, "name": "Design" },
+    { "id": 5, "name": "Product" },
+    { "id": 6, "name": "QA" },
+    { "id": 7, "name": "Security" },
+    { "id": 8, "name": "Customer Support" }
+  ],
+  "applications": [
+    { "id": 1, "name": "CRM System" },
+    { "id": 2, "name": "HR Management" },
+    { "id": 3, "name": "Finance Tracker" },
+    { "id": 4, "name": "Inventory Management" },
+    { "id": 5, "name": "Customer Support" }
+  ],
+  "screens": [
+    { "id": 1, "name": "Login" },
+    { "id": 2, "name": "Dashboard" },
+    { "id": 3, "name": "Profile" },
+    { "id": 4, "name": "Settings" },
+    { "id": 5, "name": "Help" }
+  ],
+  "features": [
+    { "id": 1, "name": "User Authentication" },
+    { "id": 2, "name": "Data Visualization" },
+    { "id": 3, "name": "Real-time Notifications" },
+    { "id": 4, "name": "Customizable UI" },
+    { "id": 5, "name": "Multi-Language Support" }
+  ]
+}
